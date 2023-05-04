@@ -26,7 +26,7 @@ const song_List = [
     id: 4,
     song: "Bones",
     singer: "Imagine dragons",
-    song_source: "/songList/Bones.mp3",
+    song_source: "./songList/Bones.mp3",
     img: "https://images.pexels.com/photos/162389/lost-places-old-decay-ruin-162389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
