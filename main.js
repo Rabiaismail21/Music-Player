@@ -1,5 +1,3 @@
-// window.addEventListener('load', HomePage);
-
 const song_List = [
   {
     id: 1,
@@ -55,9 +53,9 @@ let play_Btn = document.querySelector(".play-btn");
 let play_Icon = document.getElementById("play");
 let pause_Icon = document.getElementById("pause");
 let musicPlayer = document.querySelector(".music-player");
-let playBack = document.getElementById('play-back');
-let shuffle_Icon = document.getElementById('shuffle');
-
+let playBack = document.getElementById("play-back");
+let shuffle_Icon = document.getElementById("shuffle");
+let input_Range = document.querySelector("#range");
 
 let count = 0;
 let audioPlay = new Audio(song_List[count].song_source);
@@ -67,6 +65,12 @@ isPlaying = false;
 song_Img.src = song_List[count].img;
 song_Name.innerText = song_List[count].song;
 singer_Name.innerText = song_List[count].singer;
+
+// duration of song
+audioPlay.addEventListener("loadedmetadata", function () {
+  input_Range.max = audioPlay.duration;
+  input_Range.value = audioPlay.currentTime;
+});
 
 // to play next song
 next_Btn.addEventListener("click", () => {
@@ -84,7 +88,8 @@ next_Btn.addEventListener("click", () => {
   song_Img.classList.add("animate");
   document.querySelector(
     ".main"
-  ).style.backgroundImage = `url(${song_List[count].img})`});
+  ).style.backgroundImage = `url(${song_List[count].img})`;
+});
 
 // to play previous song
 prev_Btn.addEventListener("click", () => {
@@ -108,6 +113,11 @@ prev_Btn.addEventListener("click", () => {
 
 // to play song
 function playSong() {
+  if (audioPlay.play()) {
+    setInterval(() => {
+      input_Range.value = audioPlay.currentTime;
+    }, 500);
+  }
   play_Icon.style.display = "none";
   pause_Icon.style.display = "block";
   audioPlay.src = song_List[count].song_source;
@@ -115,6 +125,13 @@ function playSong() {
   audioPlay.play();
   isPlaying = true;
   song_Img.classList.add("animate");
+}
+try {
+  input_Range.onchange = () => {
+    audioPlay.currentTime = input_Range.value;
+  };
+} catch (error) {
+  console.log(error);
 }
 
 // to pause song
@@ -130,32 +147,26 @@ play_Icon.addEventListener("click", playSong);
 pause_Icon.addEventListener("click", pauseSong);
 
 // to playback song
-playBack.addEventListener('click', () => {
-    audioPlay.currentTime = 0;
-})
+playBack.addEventListener("click", () => {
+  audioPlay.currentTime = 0;
+});
 
-  
 // to play shuffled song
 const shuffledArray = () => {
-    let len = Math.floor(Math.random() * song_List.length);
-    console.log(len);
-    count = len;
-    song_Img.src = song_List[count].img;
-    audioPlay.src = song_List[count].song_source;
-    singer_Name.innerText = song_List[count].singer;
-    song_Name.innerText = song_List[count].song;
-    document.querySelector(
-        ".main"
-      ).style.backgroundImage = `url(${song_List[count].img})`;
-    if(isPlaying){
-        audioPlay.play();
-    }
-    else {
-        audioPlay.pause();
-    }
-}
-shuffle_Icon.addEventListener('click', shuffledArray);
-
-
-
-
+  let len = Math.floor(Math.random() * song_List.length);
+  console.log(len);
+  count = len;
+  song_Img.src = song_List[count].img;
+  audioPlay.src = song_List[count].song_source;
+  singer_Name.innerText = song_List[count].singer;
+  song_Name.innerText = song_List[count].song;
+  document.querySelector(
+    ".main"
+  ).style.backgroundImage = `url(${song_List[count].img})`;
+  if (isPlaying) {
+    audioPlay.play();
+  } else {
+    audioPlay.pause();
+  }
+};
+shuffle_Icon.addEventListener("click", shuffledArray);
