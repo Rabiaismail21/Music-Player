@@ -243,6 +243,13 @@ hr {
  cursor: pointer;
  background-color: var(--orange);
 }
+.footer-text {
+  color: var(--gray);
+}
 
+.footer-link {
+ color: var(--gray);
+ font-weight: bold;
+}
 
 
