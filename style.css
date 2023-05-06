@@ -244,12 +244,16 @@ hr {
  background-color: var(--orange);
 }
 .footer-text {
-  color: var(--gray);
+  background-color: var(--gray);
+  color: var(--white);
+  padding: 0.3rem;
+  border-radius: 10px;
 }
 
 .footer-link {
- color: var(--gray);
+ color: var(--orange);
  font-weight: bold;
+ text-decoration: none;
 }
 
 
